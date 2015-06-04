@@ -1,0 +1,41 @@
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+1.-Crear la siguiente tabla (Usuario) con pk
+
+create table Usuario1 (
+Id_Usuario1 integer,
+Nombre Varchar2 (120),
+Email Varchar2 (90),
+Sueldo_Base Float,
+CONSTRAINT PK_ID_Usuario1 primary KEY
+(Id_Usuario1));
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+2.- Crear la secuencia que se auto-incremente Usuario1
+
+CREATE SEQUENCE sec_Usuario1
+start with 1
+increment  by 1
+nomaxvalue;
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3.- Asociar la secuencia recien creada a la tabla y generar el procedimiento para insertar.
+
+CREATE OR REPLACE PROCEDURE guardar_Usuario1(
+My_Id_Usuario1 out integer,
+My_Nombre in varchar2,
+My_Email in varchar2,
+My_Sueldo_Base in float)
+AS
+BEGIN
+SELECT SEC_Usuario1.Nextval INTO My_Id_Usuario1 FROM dual;
+
+Insert Into Usuario1 VALUES(My_ID_Usuario1,My_Nombre,My_Email,My_Sueldo_Base);
+END;
+/
+DECLARE 
+ALGO INTEGER;
+BEGIN
+GUARDAR_USUARIO1(ALGO, 'GABRIEL', 'ALGO@.COM', 35000);
+END;
+/
+SELECT *FROM USUARIO1;
