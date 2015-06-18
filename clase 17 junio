@@ -1,0 +1,54 @@
+create table Aerolineas(
+
+ID_AEROLINEA    INTEGER (PK),
+NOMBRE          VARCHAR(120),
+CONSTRAINT ID_AEROLINEA_PK primary KEY
+(ID_AEROLINEA));
+
+create table Avion(
+
+ID_AVION        INTEGER,
+ID_AEROLINEA    INTEGER,
+ASIENTO         INTEGER,
+CONSTRAINT ID_AVION_PK primary KEY
+(ID_AVION),
+CONSTRAINT ID_AEROLINEA_FK FOREIGN KEY
+(ID_AEROLINEA) REFERENCES Aerolineas (ID_AEROLINEA));
+
+
+CREATE SEQUENCE sec_AEROLINEA
+start with 1
+increment  by 1
+nomaxvalue
+
+
+CREATE SEQUENCE sec_AVION
+start with 1
+increment  by 1
+nomaxvalue
+
+
+
+CREATE OR REPLACE PROCEDURE guardar_Aerolinea(
+My_Id_Aerolinea out integer,
+My_Nombre in varchar2)
+
+AS
+BEGIN
+SELECT SEC_AEROLINEA.Nextval INTO My_Id_Aerolinea FROM dual;
+
+Insert Into AEROLINEAS VALUES(My_ID_Aerolinea,My_Nombre);
+END;
+/
+
+
+CREATE OR REPLACE PROCEDURE guardar_AVION(
+My_Id_AVION out integer, My_ID_Aerolinea OUT INTEGER, MY_ASIENTO IN INTEGER)
+
+AS
+BEGIN
+SELECT SEC_AVION.Nextval INTO My_Id_AVION FROM dual;
+
+Insert Into Avion VALUES(My_ID_AVION,My_ID_Aerolinea, MY_ASIENTO);
+END;
+/
